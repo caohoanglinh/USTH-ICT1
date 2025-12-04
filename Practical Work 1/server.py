@@ -16,18 +16,14 @@ def start_server(port):
 
 
 def receive_file(conn):
-    # 1. Nhận độ dài tên file
     name_len = int.from_bytes(conn.recv(4), "big")
 
-    # 2. Nhận tên file
     filename = conn.recv(name_len).decode()
 
-    # 3. Nhận kích thước file
     file_size = int.from_bytes(conn.recv(8), "big")
 
     logging.info(f"Receiving file '{filename}' ({file_size} bytes)")
 
-    # 4. Nhận nội dung file
     with open(filename, "wb") as f:
         received = 0
         while received < file_size:
